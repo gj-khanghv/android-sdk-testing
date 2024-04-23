@@ -67,9 +67,9 @@ afterEvaluate {
             publications {
                 create<MavenPublication>(it.name) {
                     from(components.findByName(it.name))
-                    groupId = "loy.mobile"
+                    groupId = "com.github.gj-khanghv"
                     artifactId = "android-sdk-testing"
-                    version = "1.0.3"
+                    version = "release-03"
                 }
             }
         }
