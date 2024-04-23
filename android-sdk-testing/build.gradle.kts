@@ -33,9 +33,9 @@ android {
         kotlinCompilerExtensionVersion = "1.5.2"
     }
 
-
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.webkit)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
 //    implementation(project(":app"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -66,7 +69,7 @@ afterEvaluate {
                     from(components.findByName(it.name))
                     groupId = "loy.mobile"
                     artifactId = "android-sdk-testing"
-                    version = "1.0.0"
+                    version = "1.0.3"
                 }
             }
         }
