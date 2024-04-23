@@ -61,17 +61,17 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-afterEvaluate {
-    android.libraryVariants.forEach {
-        publishing {
-            publications {
-                create<MavenPublication>(it.name) {
-                    from(components.findByName(it.name))
-                    groupId = "loy.mobile"
-                    artifactId = "android-sdk-testing"
-                    version = "1.0.3"
-                }
-            }
-        }
-    }
-}
+//afterEvaluate {
+//    android.libraryVariants.forEach {
+//        publishing {
+//            publications {
+//                create<MavenPublication>(it.name) {
+//                    from(components.findByName(it.name))
+//                    groupId = "loy.mobile"
+//                    artifactId = "android-sdk-testing"
+//                    version = "1.0.3"
+//                }
+//            }
+//        }
+//    }
+//}
