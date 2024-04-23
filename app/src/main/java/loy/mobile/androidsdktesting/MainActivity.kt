@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import loy.mobile.android_sdk_testing.SdkUtils
 import loy.mobile.androidsdktesting.ui.theme.AndroidSdkTestingTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,7 +25,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     val context = LocalContext.current
                     Button(onClick = {
-                        SdkUtils.launchSdk(context, launcher)
+//                        SdkUtils.launchSdk(context, launcher)
                     }) {
 
                     }
