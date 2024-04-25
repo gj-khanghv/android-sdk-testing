@@ -1,6 +1,5 @@
 package loy.mobile.android_sdk_testing.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
@@ -9,6 +8,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import loy.mobile.android_sdk_testing.databinding.WebviewBinding
+import loy.mobile.android_sdk_testing.utils.JsObject
 
 
 class LoginActivity : AppCompatActivity() {
@@ -21,7 +21,11 @@ class LoginActivity : AppCompatActivity() {
         webview.settings.allowContentAccess = true
         webview.settings.domStorageEnabled = true
         webview.addJavascriptInterface(JsObject {
-            setResult(200, Intent().apply { putExtra("token", it) })
+            setResult(200, Intent().apply {
+                putExtra("token", it.first)
+                putExtra("refreshToken", it.second)
+                putExtra("expired", it.third)
+            })
             finish()
         }, "Android")
         webview.setWebViewClient(object : WebViewClient() {

@@ -55,6 +55,12 @@ dependencies {
     implementation(libs.androidx.webkit)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+    implementation(libs.retrofit)
+    implementation(libs.koin.android)
+    implementation(libs.gson)
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
+    implementation(libs.converter.gson)
 //    implementation(project(":app"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
