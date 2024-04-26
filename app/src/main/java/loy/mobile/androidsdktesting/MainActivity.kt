@@ -17,14 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import loy.mobile.android_sdk_testing.AndroidSDK
+//import loy.mobile.android_sdk_testing.AndroidSDK
 import loy.mobile.androidsdktesting.ui.theme.AndroidSdkTestingTheme
 
 
 class MainActivity : ComponentActivity() {
     private var shortPress = false
     private var longPress = false
-    private val sdk: AndroidSDK = AndroidSDK()
+//    private val sdk: AndroidSDK = AndroidSDK()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     val context = LocalContext.current
                     Button(onClick = {
-                        sdk.fetchToken(context, launcher)
+//                        sdk.fetchToken(context, launcher)
                     }) {
 
                     }
@@ -45,8 +45,8 @@ class MainActivity : ComponentActivity() {
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         Log.d("Caller", "Token: ${it.resultCode}, ${it.data?.getStringExtra("token")}")
         it.data?.getStringExtra("token")?.let { token ->
-            val data = sdk.fetchUserProfile(this, token)
-            Log.d("AAAAA", "Name: ${data?.email}")
+//            val data = sdk.fetchUserProfile(this, token)
+//            Log.d("AAAAA", "Name: ${data?.email}")
         }
     }
 
