@@ -7,14 +7,38 @@
     android:layout_height="match_parent"
     tools:context=".activity.LoginActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/webview_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/webview"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="@id/webview_toolbar"
+            app:layout_constraintStart_toStartOf="@id/webview_toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/webview_toolbar"
+            app:layout_constraintTop_toTopOf="@id/webview_toolbar"
+        />
+    </androidx.appcompat.widget.Toolbar>
+
     <WebView
         android:id="@+id/webview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

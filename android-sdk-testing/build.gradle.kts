@@ -61,6 +61,10 @@ dependencies {
     implementation(libs.gson)
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
     implementation(libs.converter.gson)
+    implementation(libs.iconics.core)
+    implementation ("com.mikepenz:fontawesome-typeface:5.9.0.2-kotlin@aar")
+    implementation ("com.mikepenz:google-material-typeface:4.0.0.2-kotlin@aar")
+
 //    implementation(project(":app"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
