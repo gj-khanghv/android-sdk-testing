@@ -105,7 +105,6 @@ class AuthActivity : AppCompatActivity() {
                             setUpToolbarActionIcon(GoogleMaterial.Icon.gmd_close)
                         }
                     }
-
                     super.onPageCommitVisible(view, url)
                 }
 
@@ -152,5 +151,10 @@ class AuthActivity : AppCompatActivity() {
             return true
         }
         return super.onKeyUp(keyCode, event)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
     }
 }
