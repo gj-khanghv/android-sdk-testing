@@ -5,7 +5,7 @@
 
     <application >
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.AuthActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
     </application>

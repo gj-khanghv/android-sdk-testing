@@ -3,7 +3,7 @@ package loy.mobile.android_sdk_testing
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
-import loy.mobile.android_sdk_testing.activity.LoginActivity
+import loy.mobile.android_sdk_testing.activity.AuthActivity
 import loy.mobile.android_sdk_testing.model.UserModel
 import loy.mobile.android_sdk_testing.repository.UserRepository
 import loy.mobile.android_sdk_testing.utils.KoinModules
@@ -14,12 +14,26 @@ class AndroidSDK {
     private val userRepository: UserRepository by koinApplication.koin.inject()
 
     /**
-     * Fetch Token
+     * signIn flow
      * @param context activity context
      * @param launcher to receive data
      */
-    fun fetchToken(context: Context?, launcher: ActivityResultLauncher<Intent>) {
-        val intent = Intent(context, LoginActivity::class.java)
+    fun signIn(context: Context?, launcher: ActivityResultLauncher<Intent>) {
+        val intent = Intent(context, AuthActivity::class.java).apply {
+            putExtra("method", "signIn")
+        }
+        launcher.launch(intent)
+    }
+
+    /**
+     * signUp flow
+     * @param context activity context
+     * @param launcher to receive data
+     */
+    fun signUp(context: Context?, launcher: ActivityResultLauncher<Intent>) {
+        val intent = Intent(context, AuthActivity::class.java).apply {
+            putExtra("method", "signUp")
+        }
         launcher.launch(intent)
     }
 

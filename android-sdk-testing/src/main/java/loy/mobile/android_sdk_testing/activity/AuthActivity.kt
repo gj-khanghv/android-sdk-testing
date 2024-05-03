@@ -3,45 +3,62 @@ package loy.mobile.android_sdk_testing.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.net.http.SslError
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MenuItem
-import android.webkit.SslErrorHandler
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome
+import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import com.mikepenz.iconics.utils.colorInt
 import com.mikepenz.iconics.utils.sizeDp
+import loy.mobile.android_sdk_testing.constant.Api
 import loy.mobile.android_sdk_testing.databinding.WebviewBinding
 import loy.mobile.android_sdk_testing.utils.JsObject
 
 
-class LoginActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity() {
     private lateinit var binding: WebviewBinding
 
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val lBinding = WebviewBinding.inflate(layoutInflater)
-        binding = lBinding
-        val webview = binding.webview
+        binding = WebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val method = intent.getStringExtra("method") ?: "signIn"
+
+        configToolbar()
+        configWebView(method)
+    }
+
+    private fun configToolbar() {
         setSupportActionBar(binding.webviewToolbar)
         supportActionBar?.apply {
             setDisplayShowTitleEnabled(false)
-            setHomeAsUpIndicator(IconicsDrawable(this@LoginActivity, GoogleMaterial.Icon.gmd_arrow_back_ios).apply {
-                colorInt = Color.BLACK
-                sizeDp = 21
+            setUpToolbarActionIcon(GoogleMaterial.Icon.gmd_arrow_back_ios)
+        }
+    }
+
+    private fun setUpToolbarActionIcon(icon: IIcon, color: Int = Color.BLACK, dp: Int = 21) {
+        supportActionBar?.apply {
+            setHomeAsUpIndicator(IconicsDrawable(this@AuthActivity, icon).apply {
+                colorInt = color
+                sizeDp = dp
             })
         }
-        webview.apply {
+    }
+
+    /**
+     * @param method [String] Methods sign in or sign up
+     */
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun configWebView(method: String) {
+        binding.webview.apply {
             settings.apply {
                 javaScriptEnabled = true
                 allowContentAccess = true
@@ -70,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
                         // Redirect history issue
                         -1 -> {
                             view?.stopLoading()
-                            webview.goBack()
+                            binding.webview.goBack()
                         }
                         else -> super.onReceivedError(view, request, error)
 
@@ -79,33 +96,22 @@ class LoginActivity : AppCompatActivity() {
                 override fun onPageCommitVisible(view: WebView?, url: String?) {
                     binding.toolbarTitle.text = view?.title
                     val history = binding.webview.copyBackForwardList()
-                    if (history.currentIndex > 1) {
-                        supportActionBar?.apply {
+                    supportActionBar?.apply {
+                        if (history.currentIndex > 1) {
                             setDisplayHomeAsUpEnabled(true)
-                            setHomeAsUpIndicator(
-                                IconicsDrawable(
-                                    this@LoginActivity,
-                                    GoogleMaterial.Icon.gmd_arrow_back_ios
-                                ).apply {
-                                    colorInt = Color.BLACK
-                                    sizeDp = 21
-                                })
-                        }
-                    } else {
-                        supportActionBar?.apply {
+                            setUpToolbarActionIcon(GoogleMaterial.Icon.gmd_arrow_back_ios)
+                        } else {
                             setDisplayHomeAsUpEnabled(true)
-                            setHomeAsUpIndicator(IconicsDrawable(this@LoginActivity, GoogleMaterial.Icon.gmd_close).apply {
-                                colorInt = Color.BLACK
-                                sizeDp = 21
-                            })
+                            setUpToolbarActionIcon(GoogleMaterial.Icon.gmd_close)
                         }
                     }
+
                     super.onPageCommitVisible(view, url)
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     try {
-                        webview.loadUrl(
+                        binding.webview.loadUrl(
                             """javascript:(function(){window.addEventListener("message", function(event) {
                     if (event.origin !== "https://iframe-authen.uat.skyjoy.io") return;
                     var data = event.data;
@@ -120,9 +126,7 @@ class LoginActivity : AppCompatActivity() {
                     super.onPageFinished(view, url)
                 }
             })
-            loadUrl(
-                "https://iframe-authen.uat.skyjoy.io/?action=signin&client_id=641b66b0-a17d-45c6-b925-9c41513e2ef2",
-            )
+            loadUrl(Api.authUrl(method))
         }
     }
 
