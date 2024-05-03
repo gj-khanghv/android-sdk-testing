@@ -2,7 +2,7 @@ package loy.mobile.android_sdk_testing
 
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import androidx.activity.result.ActivityResultLauncher
 import loy.mobile.android_sdk_testing.activity.AuthActivity
 import loy.mobile.android_sdk_testing.model.UserModel
@@ -21,7 +21,7 @@ class AndroidSDK {
      */
     fun signIn(context: Context?, launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent(context, AuthActivity::class.java).apply {
-            setFlags(FLAG_ACTIVITY_SINGLE_TOP)
+            setFlags(FLAG_ACTIVITY_CLEAR_TOP)
             putExtra("method", "signIn")
         }
         launcher.launch(intent)
@@ -34,7 +34,7 @@ class AndroidSDK {
      */
     fun signUp(context: Context?, launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent(context, AuthActivity::class.java).apply {
-            setFlags(FLAG_ACTIVITY_SINGLE_TOP)
+            setFlags(FLAG_ACTIVITY_CLEAR_TOP)
             putExtra("method", "signUp")
         }
         launcher.launch(intent)
