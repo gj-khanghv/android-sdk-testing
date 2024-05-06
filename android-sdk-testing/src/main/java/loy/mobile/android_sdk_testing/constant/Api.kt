@@ -14,6 +14,6 @@ object Api {
             "signIn" -> SIGN_IN
             else -> SIGN_UP
         }
-        return BASE_URL_BUILDER.appendQueryParameter(CLIENT_ID_PARAM, CLIENT_ID).appendQueryParameter(ACTION_PARAM, action).toString()
+        return BASE_URL_BUILDER.clearQuery().appendQueryParameter(CLIENT_ID_PARAM, CLIENT_ID).appendQueryParameter(ACTION_PARAM, action).toString()
     }
 }

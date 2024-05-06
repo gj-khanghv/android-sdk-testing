@@ -157,4 +157,8 @@ class AuthActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

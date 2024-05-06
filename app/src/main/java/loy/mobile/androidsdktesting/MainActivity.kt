@@ -1,13 +1,11 @@
 package loy.mobile.androidsdktesting
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -17,15 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-//import loy.mobile.android_sdk_testing.AndroidSDK
-//import loy.mobile.android_sdk_testing.AndroidSDK
+import loy.mobile.android_sdk_testing.AndroidSDK
 import loy.mobile.androidsdktesting.ui.theme.AndroidSdkTestingTheme
 
 
 class MainActivity : ComponentActivity() {
     private var shortPress = false
     private var longPress = false
-//    private val sdk: AndroidSDK = AndroidSDK()
+    private val sdk: AndroidSDK = AndroidSDK()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -33,10 +30,17 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     val context = LocalContext.current
-                    Button(onClick = {
-//                        sdk.signUp(context, launcher)
-                    }) {
+                    Column {
+                        Button(onClick = {
+                            sdk.signIn(context, launcher)
+                        }) {
 
+                        }
+                        Button(onClick = {
+                            sdk.signUp(context, launcher)
+                        }) {
+
+                        }
                     }
                 }
             }
