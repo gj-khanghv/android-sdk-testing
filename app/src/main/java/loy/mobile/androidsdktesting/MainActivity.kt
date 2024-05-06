@@ -15,14 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import loy.mobile.android_sdk_testing.AndroidSDK
+//import loy.mobile.android_sdk_testing.AndroidSDK
 import loy.mobile.androidsdktesting.ui.theme.AndroidSdkTestingTheme
 
 
 class MainActivity : ComponentActivity() {
     private var shortPress = false
     private var longPress = false
-    private val sdk: AndroidSDK = AndroidSDK()
+//    private val sdk: AndroidSDK = AndroidSDK()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -32,12 +32,12 @@ class MainActivity : ComponentActivity() {
                     val context = LocalContext.current
                     Column {
                         Button(onClick = {
-                            sdk.signIn(context, launcher)
+//                            sdk.signIn(context, launcher)
                         }) {
 
                         }
                         Button(onClick = {
-                            sdk.signUp(context, launcher)
+//                            sdk.signUp(context, launcher)
                         }) {
 
                         }
