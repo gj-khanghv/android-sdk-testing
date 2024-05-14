@@ -19,6 +19,14 @@ dependencies {
 	implementation("com.github.gj-khanghv:android-sdk-testing:release-07")
 }
 ```
+Or Maven:
+```Kotlin
+<dependency>
+  <groupId>com.github.gj-khanghv</groupId>
+  <artifactId>android-sdk-testing</artifactId>
+  <version>release-07</version>
+</dependency>
+```
 ## How do I use Android SDK Testing?
 Instantiate `AndroidSDK` object:
 ```Kotlin
