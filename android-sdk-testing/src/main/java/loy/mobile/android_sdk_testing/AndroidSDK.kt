@@ -22,7 +22,6 @@ class AndroidSDK {
      */
     fun signIn(context: Context?, launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent(context, AuthActivity::class.java).apply {
-            setFlags(FLAG_ACTIVITY_NEW_TASK)
             putExtra("method", "signIn")
         }
         launcher.launch(intent)
@@ -35,7 +34,6 @@ class AndroidSDK {
      */
     fun signUp(context: Context?, launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent(context, AuthActivity::class.java).apply {
-            setFlags(FLAG_ACTIVITY_NEW_TASK)
             putExtra("method", "signUp")
         }
         launcher.launch(intent)
