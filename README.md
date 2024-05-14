@@ -2,7 +2,7 @@
 [![](https://jitpack.io/v/gj-khanghv/android-sdk-testing.svg)](https://jitpack.io/#gj-khanghv/android-sdk-testing)   
 A SDK to access XXX services such as login, sign-up, point exchange, ext..
 ## Download
-You can download a jar from GitHub's [releases page](https://github.com/gj-khanghv/android-sdk-testing/releases).
+You can download a jar from GitHub's [releases page](https://github.com/gj-khanghv/android-sdk-testing/releases).   
 Or use Gradle:
 ```Kotlin
 repositories {
