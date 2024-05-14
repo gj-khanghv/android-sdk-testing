@@ -79,4 +79,4 @@ class MainActivity : ComponentActivity() {
 ## Author
 Khang Huynh - @gj-khanghv on Github
 ## License
-BSD, part MIT and Apache 2.0. See the [LICENSE](https://github.com/bumptech/glide/blob/master/LICENSE) file for details.
+BSD, part MIT and Apache 2.0. See the [LICENSE](https://github.com/gj-khanghv/android-sdk-testing/blob/master/LICENSE) file for details.
