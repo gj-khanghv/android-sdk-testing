@@ -47,6 +47,6 @@ iconics-core = { group = "com.mikepenz", name = "iconics-core", version = "5.4.0
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version = "1.9.24" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
