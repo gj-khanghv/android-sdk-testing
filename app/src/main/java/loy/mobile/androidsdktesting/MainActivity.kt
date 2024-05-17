@@ -36,11 +36,11 @@ class MainActivity : ComponentActivity() {
                         }) {
 
                         }
-                        Button(onClick = {
-//                            sdk.signUp(context, launcher)
-                        }) {
-
-                        }
+//                        Button(onClick = {
+////                            sdk.signUp(context, launcher)
+//                        }) {
+//
+//                        }
                     }
                 }
             }

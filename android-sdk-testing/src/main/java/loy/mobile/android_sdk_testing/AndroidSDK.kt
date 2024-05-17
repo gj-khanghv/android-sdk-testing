@@ -1,5 +1,6 @@
 package loy.mobile.android_sdk_testing
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -25,6 +26,15 @@ class AndroidSDK {
             putExtra("method", "signIn")
         }
         launcher.launch(intent)
+    }
+
+    /**
+     * signIn flow
+     * @param activity activity
+     */
+    fun signIn(activity: Activity?) {
+        val intent = Intent(activity, AuthActivity::class.java)
+        activity?.startActivityForResult(intent, 1)
     }
 
     /**
