@@ -1,8 +1,10 @@
 # Android SDK Testing
-[![](https://jitpack.io/v/gj-khanghv/android-sdk-testing.svg)](https://jitpack.io/#gj-khanghv/android-sdk-testing)   
+[![](https://jitpack.io/v/gj-khanghv/android-sdk-testing.svg)](https://jitpack.io/#gj-khanghv/android-sdk-testing)
+
 A SDK to access XXX services such as login, sign-up, point exchange, ext..
 ## Download
-You can download a jar from GitHub's [releases page](https://github.com/gj-khanghv/android-sdk-testing/releases).   
+You can download a jar from GitHub's [releases page](https://github.com/gj-khanghv/android-sdk-testing/releases).
+
 Or use Gradle:
 ```Kotlin
 repositories {
@@ -17,8 +19,15 @@ dependencies {
 	implementation("com.github.gj-khanghv:android-sdk-testing:release-07")
 }
 ```
+Or Maven:
+```Kotlin
+<dependency>
+  <groupId>com.github.gj-khanghv</groupId>
+  <artifactId>android-sdk-testing</artifactId>
+  <version>release-07</version>
+</dependency>
+```
 ## How do I use Android SDK Testing?
-***
 Instantiate `AndroidSDK` object:
 ```Kotlin
 private val sdk: AndroidSDK = AndroidSDK()
@@ -76,8 +85,6 @@ class MainActivity : ComponentActivity() {
 }
 ```
 ## Author
-***
 Khang Huynh - @gj-khanghv on Github
 ## License
-***
-BSD, part MIT and Apache 2.0. See the [LICENSE](https://github.com/bumptech/glide/blob/master/LICENSE) file for details.
+BSD, part MIT and Apache 2.0. See the [LICENSE](https://github.com/gj-khanghv/android-sdk-testing/blob/master/LICENSE) file for details.
