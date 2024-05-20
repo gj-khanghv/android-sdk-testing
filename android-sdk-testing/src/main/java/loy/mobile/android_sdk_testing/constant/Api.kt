@@ -8,12 +8,24 @@ object Api {
     private const val SIGN_UP = "signup"
     private const val ACTION_PARAM = "action"
     private const val CLIENT_ID_PARAM = "client_id"
-    private val BASE_URL_BUILDER: Uri.Builder = Uri.Builder().scheme("https").authority("iframe-authen.uat.skyjoy.io")
-    fun authUrl(method: String): String {
+    private const val AUTHORITY_DEV = "iframe-authen.dev.skyjoy.io"
+    private const val AUTHORITY_STG = "iframe-authen.stg.skyjoy.io"
+    private const val AUTHORITY_UAT = "iframe-authen.uat.skyjoy.io"
+    private const val AUTHORITY_PROD = "iframe-authen.skyjoy.io"
+    private val BASE_URL_BUILDER: Uri.Builder = Uri.Builder().scheme("https")
+    fun authUrl(method: String, env: String): String {
         val action = when (method) {
             "signIn" -> SIGN_IN
             else -> SIGN_UP
         }
-        return BASE_URL_BUILDER.clearQuery().appendQueryParameter(CLIENT_ID_PARAM, CLIENT_ID).appendQueryParameter(ACTION_PARAM, action).toString()
+        val authority = when (env) {
+            "dev" -> AUTHORITY_DEV
+            "stg" -> AUTHORITY_STG
+            "uat" -> AUTHORITY_UAT
+            "prod" -> AUTHORITY_PROD
+            else -> AUTHORITY_UAT
+        }
+        return BASE_URL_BUILDER.clearQuery().authority(authority).appendQueryParameter(CLIENT_ID_PARAM, CLIENT_ID)
+            .appendQueryParameter(ACTION_PARAM, action).toString()
     }
 }

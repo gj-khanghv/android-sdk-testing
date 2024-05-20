@@ -31,9 +31,10 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val method = intent.getStringExtra("method") ?: "signIn"
+        val env = intent.getStringExtra("env") ?: "uat"
 
         configToolbar()
-        configWebView(method)
+        configWebView(method, env)
     }
 
     private fun configToolbar() {
@@ -57,7 +58,7 @@ class AuthActivity : AppCompatActivity() {
      * @param method [String] Methods sign in or sign up
      */
     @SuppressLint("SetJavaScriptEnabled")
-    private fun configWebView(method: String) {
+    private fun configWebView(method: String, env: String) {
         binding.webview.apply {
             settings.apply {
                 javaScriptEnabled = true
@@ -125,7 +126,7 @@ class AuthActivity : AppCompatActivity() {
                     super.onPageFinished(view, url)
                 }
             })
-            loadUrl(Api.authUrl(method))
+            loadUrl(Api.authUrl(method, env))
         }
     }
 

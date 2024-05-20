@@ -12,7 +12,9 @@ import loy.mobile.android_sdk_testing.repository.UserRepository
 import loy.mobile.android_sdk_testing.utils.KoinModules
 import org.koin.core.KoinApplication
 
-class AndroidSDK {
+class AndroidSDK(
+    private val env: String,
+) {
     private val koinApplication = KoinApplication.init().modules(KoinModules.apiModule, KoinModules.retrofitModule, KoinModules.repositoryModule)
     private val userRepository: UserRepository by koinApplication.koin.inject()
 
@@ -24,6 +26,7 @@ class AndroidSDK {
     fun signIn(context: Context?, launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent(context, AuthActivity::class.java).apply {
             putExtra("method", "signIn")
+            putExtra("env", env)
         }
         launcher.launch(intent)
     }
@@ -35,6 +38,7 @@ class AndroidSDK {
     fun signIn(activity: Activity?) {
         val intent = Intent(activity, AuthActivity::class.java).apply {
             putExtra("method", "signIn")
+            putExtra("env", env)
         }
         activity?.startActivityForResult(intent, 1)
     }
@@ -47,6 +51,7 @@ class AndroidSDK {
     fun signUp(context: Context?, launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent(context, AuthActivity::class.java).apply {
             putExtra("method", "signUp")
+            putExtra("env", env)
         }
         launcher.launch(intent)
     }
@@ -58,6 +63,7 @@ class AndroidSDK {
     fun signUp(activity: Activity?) {
         val intent = Intent(activity, AuthActivity::class.java).apply {
             putExtra("method", "signUp")
+            putExtra("env", env)
         }
         activity?.startActivityForResult(intent, 1)
     }
