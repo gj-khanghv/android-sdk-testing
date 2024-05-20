@@ -33,7 +33,9 @@ class AndroidSDK {
      * @param activity activity
      */
     fun signIn(activity: Activity?) {
-        val intent = Intent(activity, AuthActivity::class.java)
+        val intent = Intent(activity, AuthActivity::class.java).apply {
+            putExtra("method", "signIn")
+        }
         activity?.startActivityForResult(intent, 1)
     }
 
@@ -47,6 +49,17 @@ class AndroidSDK {
             putExtra("method", "signUp")
         }
         launcher.launch(intent)
+    }
+
+    /**
+     * signUp flow
+     * @param activity activity
+     */
+    fun signUp(activity: Activity?) {
+        val intent = Intent(activity, AuthActivity::class.java).apply {
+            putExtra("method", "signUp")
+        }
+        activity?.startActivityForResult(intent, 1)
     }
 
     /**
