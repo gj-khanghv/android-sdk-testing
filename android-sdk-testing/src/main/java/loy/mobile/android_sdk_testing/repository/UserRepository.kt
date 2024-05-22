@@ -1,7 +1,9 @@
 package loy.mobile.android_sdk_testing.repository
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import loy.mobile.android_sdk_testing.model.UserModel
 
 interface UserRepository {
-    fun fetchUserProfile(token: String): UserModel?
+    suspend fun fetchUserProfile(token: String): UserModel?
 }

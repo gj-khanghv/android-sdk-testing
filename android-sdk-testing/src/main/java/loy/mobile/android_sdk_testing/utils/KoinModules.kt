@@ -4,7 +4,9 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import loy.mobile.android_sdk_testing.network.ApiService
+import loy.mobile.android_sdk_testing.repository.AuthRepository
 import loy.mobile.android_sdk_testing.repository.UserRepository
+import loy.mobile.android_sdk_testing.repository.impl.AuthRepositoryImpl
 import loy.mobile.android_sdk_testing.repository.impl.UserRepositoryImpl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -50,7 +52,11 @@ object KoinModules {
         fun provideUserRepository(apiService: ApiService): UserRepository {
             return UserRepositoryImpl(apiService)
         }
+        fun provideAuthRepository(apiService: ApiService): AuthRepository {
+            return AuthRepositoryImpl(apiService)
+        }
 
         single { provideUserRepository(get()) }
+        single { provideAuthRepository(get()) }
     }
 }

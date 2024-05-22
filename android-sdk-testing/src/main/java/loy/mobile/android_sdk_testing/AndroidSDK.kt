@@ -6,8 +6,13 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.activity.result.ActivityResultLauncher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import loy.mobile.android_sdk_testing.activity.AuthActivity
+import loy.mobile.android_sdk_testing.model.ExchangeToken
 import loy.mobile.android_sdk_testing.model.UserModel
+import loy.mobile.android_sdk_testing.repository.AuthRepository
 import loy.mobile.android_sdk_testing.repository.UserRepository
 import loy.mobile.android_sdk_testing.utils.KoinModules
 import org.koin.core.KoinApplication
@@ -17,6 +22,7 @@ class AndroidSDK(
 ) {
     private val koinApplication = KoinApplication.init().modules(KoinModules.apiModule, KoinModules.retrofitModule, KoinModules.repositoryModule)
     private val userRepository: UserRepository by koinApplication.koin.inject()
+    private val authRepository: AuthRepository by koinApplication.koin.inject()
 
     /**
      * signIn flow
@@ -69,11 +75,14 @@ class AndroidSDK(
     }
 
     /**
-     * Fetch User Profile
-     * @param token access token
-     * @return user profile
+     * exchange token
+     * @param token current system token
+     * @param onExchangeToken callback to receive exchange token model
      */
-    fun fetchUserProfile(token: String): UserModel? {
-        return userRepository.fetchUserProfile(token)
+    fun exchangeToken(token: String, onExchangeToken: (ExchangeToken?) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val exchangeToken = authRepository.exchangeToken(token)
+            onExchangeToken(exchangeToken)
+        }
     }
 }
