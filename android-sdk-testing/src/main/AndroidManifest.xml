@@ -8,6 +8,12 @@
             android:name=".activity.AuthActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
+        <activity android:name=".activity.PointExchangeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false"/>
+        <activity android:name=".activity.FlightRedemptionActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false"/>
     </application>
 
 </manifest>

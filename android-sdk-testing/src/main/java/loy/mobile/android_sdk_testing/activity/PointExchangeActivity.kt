@@ -23,7 +23,7 @@ import loy.mobile.android_sdk_testing.databinding.WebviewBinding
 import loy.mobile.android_sdk_testing.utils.JsObject
 
 
-class AuthActivity : AppCompatActivity() {
+class PointExchangeActivity : AppCompatActivity() {
     private lateinit var binding: WebviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +31,11 @@ class AuthActivity : AppCompatActivity() {
         binding = WebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val method = intent.getStringExtra("method") ?: "signIn"
+        val token = intent.getStringExtra("token") ?: ""
         val env = intent.getStringExtra("env") ?: "uat"
 
         configToolbar()
-        configWebView(method, env)
+        configWebView(token, env)
     }
 
     private fun configToolbar() {
@@ -48,7 +48,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun setUpToolbarActionIcon(icon: IIcon, color: Int = Color.BLACK, dp: Int = 21) {
         supportActionBar?.apply {
-            setHomeAsUpIndicator(IconicsDrawable(this@AuthActivity, icon).apply {
+            setHomeAsUpIndicator(IconicsDrawable(this@PointExchangeActivity, icon).apply {
                 colorInt = color
                 sizeDp = dp
             })
@@ -79,6 +79,13 @@ class AuthActivity : AppCompatActivity() {
                 "Android"
             )
             setWebViewClient(object : WebViewClient() {
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                    Log.d("AAAAA", "Url: $url")
+                    super.onPageStarted(view, url, favicon)
+                }
+                override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                    return false
+                }
 
                 override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                     Log.d("WVERROR", "onReceivedError: ${error?.errorCode}")
@@ -89,6 +96,7 @@ class AuthActivity : AppCompatActivity() {
                             binding.webview.goBack()
                         }
                         else -> super.onReceivedError(view, request, error)
+
                     }
                 }
                 override fun onPageCommitVisible(view: WebView?, url: String?) {
@@ -106,42 +114,15 @@ class AuthActivity : AppCompatActivity() {
                     super.onPageCommitVisible(view, url)
                 }
 
-                override fun onPageStarted(view: WebView?, url: String, favicon: Bitmap?) {
-                    super.onPageStarted(view, url, favicon)
-                    // Log the URL when a page starts loading
-                    Log.d("WebView", "Loading URL: $url")
-                }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    try {
-                        binding.webview.loadUrl(
-                            """javascript:(function(){window.addEventListener("message", function(event) {
-                    if (event.origin !== "https://iframe-authen.stg.skyjoy.io") return;
-                    var data = event.data;
-                    if (typeof data === 'object') {
-                        Android.receiveMessage(JSON.stringify(data));
-                    }
-                }, false);})()"""
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                    super.onPageFinished(view, url)
-                }
             })
-            loadUrl(Api.authUrl(method, env))
+            loadUrl(Api.pointExchange(method))
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val stack = binding.webview.copyBackForwardList()
-                if (stack.currentIndex > 1) {
-                    binding.webview.goBack()
-                } else {
-                    finish()
-                }
+                finish()
                 return true
             }
 
@@ -150,10 +131,6 @@ class AuthActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && binding.webview.copyBackForwardList().currentIndex > 1) {
-            binding.webview.goBack()
-            return true
-        }
         return super.onKeyUp(keyCode, event)
     }
 

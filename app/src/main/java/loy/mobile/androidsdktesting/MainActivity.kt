@@ -15,14 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-//import loy.mobile.android_sdk_testing.AndroidSDK
+import loy.mobile.android_sdk_testing.AndroidSDK
 import loy.mobile.androidsdktesting.ui.theme.AndroidSdkTestingTheme
 
 
 class MainActivity : ComponentActivity() {
     private var shortPress = false
     private var longPress = false
-//    private val sdk: AndroidSDK = AndroidSDK()
+    private val sdk: AndroidSDK = AndroidSDK(env = "stg")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -32,15 +32,10 @@ class MainActivity : ComponentActivity() {
                     val context = LocalContext.current
                     Column {
                         Button(onClick = {
-//                            sdk.signIn(context, launcher)
+                            sdk.signIn(this@MainActivity, launcher)
                         }) {
 
                         }
-//                        Button(onClick = {
-////                            sdk.signUp(context, launcher)
-//                        }) {
-//
-//                        }
                     }
                 }
             }
@@ -50,6 +45,7 @@ class MainActivity : ComponentActivity() {
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         Log.d("Caller", "Token: ${it.resultCode}, ${it.data?.getStringExtra("token")}")
         it.data?.getStringExtra("token")?.let { token ->
+            sdk.flightRedemption(this@MainActivity, token)
 //            val data = sdk.fetchUserProfile(this, token)
 //            Log.d("AAAAA", "Name: ${data?.email}")
         }

@@ -3,15 +3,15 @@ package loy.mobile.android_sdk_testing
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import loy.mobile.android_sdk_testing.activity.AuthActivity
+import loy.mobile.android_sdk_testing.activity.FlightRedemptionActivity
+import loy.mobile.android_sdk_testing.activity.PointExchangeActivity
 import loy.mobile.android_sdk_testing.model.ExchangeToken
-import loy.mobile.android_sdk_testing.model.UserModel
 import loy.mobile.android_sdk_testing.repository.AuthRepository
 import loy.mobile.android_sdk_testing.repository.UserRepository
 import loy.mobile.android_sdk_testing.utils.KoinModules
@@ -83,6 +83,33 @@ class AndroidSDK(
         CoroutineScope(Dispatchers.IO).launch {
             val exchangeToken = authRepository.exchangeToken(token)
             onExchangeToken(exchangeToken)
+        }
+    }
+
+    /**
+     * point exchange
+     * @param activity activity5
+     */
+    fun pointExchange(activity: Activity?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val token = authRepository.mockTokenForPointExchange()
+            val intent = Intent(activity, PointExchangeActivity::class.java).apply {
+                putExtra("token", token)
+                putExtra("env", env)
+            }
+            Log.d("AAAAA", "Token: $token")
+            activity?.startActivity(intent)
+        }
+    }
+
+    fun flightRedemption(activity: Activity?, token: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val intent = Intent(activity, FlightRedemptionActivity::class.java).apply {
+                putExtra("token", token)
+                putExtra("env", env)
+            }
+            Log.d("AAAAA", "Token: $token")
+            activity?.startActivity(intent)
         }
     }
 }

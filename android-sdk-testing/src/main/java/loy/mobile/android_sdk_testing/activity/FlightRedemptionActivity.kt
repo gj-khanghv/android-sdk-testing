@@ -2,13 +2,10 @@ package loy.mobile.android_sdk_testing.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.MenuItem
-import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -23,7 +20,7 @@ import loy.mobile.android_sdk_testing.databinding.WebviewBinding
 import loy.mobile.android_sdk_testing.utils.JsObject
 
 
-class AuthActivity : AppCompatActivity() {
+class FlightRedemptionActivity : AppCompatActivity() {
     private lateinit var binding: WebviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +28,11 @@ class AuthActivity : AppCompatActivity() {
         binding = WebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val method = intent.getStringExtra("method") ?: "signIn"
+        val token = intent.getStringExtra("token") ?: ""
         val env = intent.getStringExtra("env") ?: "uat"
 
         configToolbar()
-        configWebView(method, env)
+        configWebView(token, env)
     }
 
     private fun configToolbar() {
@@ -48,7 +45,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun setUpToolbarActionIcon(icon: IIcon, color: Int = Color.BLACK, dp: Int = 21) {
         supportActionBar?.apply {
-            setHomeAsUpIndicator(IconicsDrawable(this@AuthActivity, icon).apply {
+            setHomeAsUpIndicator(IconicsDrawable(this@FlightRedemptionActivity, icon).apply {
                 colorInt = color
                 sizeDp = dp
             })
@@ -79,23 +76,15 @@ class AuthActivity : AppCompatActivity() {
                 "Android"
             )
             setWebViewClient(object : WebViewClient() {
-
-                override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                    Log.d("WVERROR", "onReceivedError: ${error?.errorCode}")
-                    when (error?.errorCode) {
-                        // Redirect history issue
-                        -1 -> {
-                            view?.stopLoading()
-                            binding.webview.goBack()
-                        }
-                        else -> super.onReceivedError(view, request, error)
-                    }
+                override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                    return false
                 }
-                override fun onPageCommitVisible(view: WebView?, url: String?) {
+
+                override fun onPageFinished(view: WebView?, url: String?) {
                     binding.toolbarTitle.text = view?.title
                     val history = binding.webview.copyBackForwardList()
                     supportActionBar?.apply {
-                        if (history.currentIndex > 1) {
+                        if (history.currentIndex > 3) {
                             setDisplayHomeAsUpEnabled(true)
                             setUpToolbarActionIcon(GoogleMaterial.Icon.gmd_arrow_back_ios)
                         } else {
@@ -103,33 +92,25 @@ class AuthActivity : AppCompatActivity() {
                             setUpToolbarActionIcon(GoogleMaterial.Icon.gmd_close)
                         }
                     }
-                    super.onPageCommitVisible(view, url)
-                }
-
-                override fun onPageStarted(view: WebView?, url: String, favicon: Bitmap?) {
-                    super.onPageStarted(view, url, favicon)
-                    // Log the URL when a page starts loading
-                    Log.d("WebView", "Loading URL: $url")
-                }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    try {
-                        binding.webview.loadUrl(
-                            """javascript:(function(){window.addEventListener("message", function(event) {
-                    if (event.origin !== "https://iframe-authen.stg.skyjoy.io") return;
-                    var data = event.data;
-                    if (typeof data === 'object') {
-                        Android.receiveMessage(JSON.stringify(data));
-                    }
-                }, false);})()"""
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
                     super.onPageFinished(view, url)
                 }
+
+//                override fun onPageCommitVisible(view: WebView?, url: String?) {
+//                    binding.toolbarTitle.text = view?.title
+//                    val history = binding.webview.copyBackForwardList()
+//                    supportActionBar?.apply {
+//                        if (history.currentIndex > 3) {
+//                            setDisplayHomeAsUpEnabled(true)
+//                            setUpToolbarActionIcon(GoogleMaterial.Icon.gmd_arrow_back_ios)
+//                        } else {
+//                            setDisplayHomeAsUpEnabled(true)
+//                            setUpToolbarActionIcon(GoogleMaterial.Icon.gmd_close)
+//                        }
+//                    }
+//                    super.onPageCommitVisible(view, url)
+//                }
             })
-            loadUrl(Api.authUrl(method, env))
+            loadUrl(Api.flightRedemption(method))
         }
     }
 
@@ -137,7 +118,7 @@ class AuthActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 val stack = binding.webview.copyBackForwardList()
-                if (stack.currentIndex > 1) {
+                if (stack.currentIndex > 3) {
                     binding.webview.goBack()
                 } else {
                     finish()
@@ -150,7 +131,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && binding.webview.copyBackForwardList().currentIndex > 1) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && binding.webview.copyBackForwardList().currentIndex > 0) {
             binding.webview.goBack()
             return true
         }
