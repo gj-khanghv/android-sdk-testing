@@ -21,7 +21,7 @@ import org.koin.core.KoinApplication
 class AndroidSDK(
     private val env: String,
 ) {
-    private val koinApplication = KoinApplication.init().modules(KoinModules.apiModule, KoinModules.retrofitModule, KoinModules.repositoryModule)
+    private val koinApplication = KoinApplication.init().modules(KoinModules.retrofitModule, KoinModules.repositoryModule)
     private val userRepository: UserRepository by koinApplication.koin.inject()
     private val authRepository: AuthRepository by koinApplication.koin.inject()
 
@@ -82,7 +82,7 @@ class AndroidSDK(
      */
     fun exchangeToken(token: String, onExchangeToken: (ExchangeToken?) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
-            val exchangeToken = authRepository.exchangeToken(token)
+            val exchangeToken = authRepository.exchangeToken(token, env)
             onExchangeToken(exchangeToken)
         }
     }
@@ -93,7 +93,7 @@ class AndroidSDK(
      */
     fun pointExchange(activity: Activity?) {
         CoroutineScope(Dispatchers.IO).launch {
-            val token = authRepository.mockTokenForPointExchange()
+            val token = authRepository.mockTokenForPointExchange(env)
             val intent = Intent(activity, PointExchangeActivity::class.java).apply {
                 putExtra("token", token)
                 putExtra("env", env)
@@ -116,7 +116,7 @@ class AndroidSDK(
 
     fun userProfile(token: String, onProfileFetch: (UserModel?) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
-            val user = userRepository.fetchUserProfile(token)
+            val user = userRepository.fetchUserProfile(token, env)
             onProfileFetch(user)
         }
     }

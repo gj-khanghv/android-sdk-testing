@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     val context = LocalContext.current
                     Column {
                         Button(onClick = {
-//                            sdk.signIn(this@MainActivity, launcher)
+//                            sdk.pointExchange(this@MainActivity)
                         }) {
 
                         }

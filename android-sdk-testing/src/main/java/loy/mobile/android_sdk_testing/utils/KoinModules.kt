@@ -17,14 +17,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 object KoinModules {
-    val apiModule = module {
-        fun provideUseApi(retrofit: Retrofit): ApiService {
-            return retrofit.create(ApiService::class.java)
-        }
-
-        single { provideUseApi(get()) }
-    }
-
     val retrofitModule = module {
         fun provideGson(): Gson {
             return GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).create()
@@ -35,12 +27,10 @@ object KoinModules {
             return okHttpClientBuilder.build()
         }
 
-        fun provideRetrofit(factory: Gson, client: OkHttpClient): Retrofit {
+        fun provideRetrofit(factory: Gson, client: OkHttpClient): Retrofit.Builder {
             return Retrofit.Builder()
-                .baseUrl("https://api.stg.skyjoy.io/")
                 .addConverterFactory(GsonConverterFactory.create(factory))
                 .client(client)
-                .build()
         }
 
         single { provideGson() }
@@ -49,11 +39,11 @@ object KoinModules {
     }
 
     val repositoryModule = module {
-        fun provideUserRepository(apiService: ApiService): UserRepository {
-            return UserRepositoryImpl(apiService)
+        fun provideUserRepository(apiBuilder: Retrofit.Builder): UserRepository {
+            return UserRepositoryImpl(apiBuilder)
         }
-        fun provideAuthRepository(apiService: ApiService): AuthRepository {
-            return AuthRepositoryImpl(apiService)
+        fun provideAuthRepository(apiBuilder: Retrofit.Builder): AuthRepository {
+            return AuthRepositoryImpl(apiBuilder)
         }
 
         single { provideUserRepository(get()) }

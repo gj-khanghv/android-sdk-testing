@@ -12,6 +12,8 @@ object Api {
     private const val AUTHORITY_STG = "iframe-authen.stg.skyjoy.io"
     private const val AUTHORITY_UAT = "iframe-authen.uat.skyjoy.io"
     private const val AUTHORITY_PROD = "iframe-authen.skyjoy.io"
+    private const val API_BASE_URL_DEV = "https://api.dev.skyjoy.io/";
+    private const val API_BASE_URL_STG = "https://api.stg.skyjoy.io/";
     private val BASE_URL_BUILDER: Uri.Builder = Uri.Builder().scheme("https")
     fun authUrl(method: String, env: String): String {
         val authority = when (env) {
@@ -42,5 +44,10 @@ object Api {
     fun flightRedemption(token: String): String {
         return BASE_URL_BUILDER.clearQuery().authority("partner-app.stg.skyjoy.io").appendQueryParameter("t", token)
             .appendQueryParameter("m", "bookingModule").toString()
+    }
+
+    fun baseUrlApi(env: String): String = when(env) {
+        "dev" -> API_BASE_URL_DEV
+        else -> API_BASE_URL_STG
     }
 }
