@@ -1,5 +1,6 @@
 package loy.mobile.android_sdk_testing.repository.impl
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -18,7 +19,6 @@ class UserRepositoryImpl(
             try {
                 api.fetchProfile("Bearer $token").body()?.data
             } catch (e: Exception) {
-                // Handle exception if needed
                 null
             }
         }

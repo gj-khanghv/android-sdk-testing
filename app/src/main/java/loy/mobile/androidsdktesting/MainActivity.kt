@@ -43,11 +43,17 @@ class MainActivity : ComponentActivity() {
     }
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        Log.d("Caller", "Token: ${it.resultCode}, ${it.data?.getStringExtra("token")}")
+//        Log.d("Caller", "Token: ${it.resultCode}, ${it.data?.getStringExtra("token")}")
         it.data?.getStringExtra("token")?.let { token ->
 //            sdk.flightRedemption(this@MainActivity, token)
-//            val data = sdk.fetchUserProfile(this, token)
-//            Log.d("AAAAA", "Name: ${data?.email}")
+            try {
+//                sdk.userProfile(token) {
+//                    Log.d("AAAAA", "Name: ${it}")
+//                }
+            } catch (e: Exception) {
+                Log.d("AAAAA", "Error: ${e.toString()}")
+            }
+
         }
     }
 

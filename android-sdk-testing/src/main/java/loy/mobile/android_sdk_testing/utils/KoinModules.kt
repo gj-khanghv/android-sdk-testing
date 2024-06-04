@@ -37,7 +37,7 @@ object KoinModules {
 
         fun provideRetrofit(factory: Gson, client: OkHttpClient): Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://api.dev.skyjoy.io/")
+                .baseUrl("https://api.stg.skyjoy.io/")
                 .addConverterFactory(GsonConverterFactory.create(factory))
                 .client(client)
                 .build()

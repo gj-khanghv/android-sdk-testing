@@ -12,6 +12,7 @@ import loy.mobile.android_sdk_testing.activity.AuthActivity
 import loy.mobile.android_sdk_testing.activity.FlightRedemptionActivity
 import loy.mobile.android_sdk_testing.activity.PointExchangeActivity
 import loy.mobile.android_sdk_testing.model.ExchangeToken
+import loy.mobile.android_sdk_testing.model.UserModel
 import loy.mobile.android_sdk_testing.repository.AuthRepository
 import loy.mobile.android_sdk_testing.repository.UserRepository
 import loy.mobile.android_sdk_testing.utils.KoinModules
@@ -110,6 +111,13 @@ class AndroidSDK(
             }
             Log.d("AAAAA", "Token: $token")
             activity?.startActivity(intent)
+        }
+    }
+
+    fun userProfile(token: String, onProfileFetch: (UserModel?) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val user = userRepository.fetchUserProfile(token)
+            onProfileFetch(user)
         }
     }
 }
