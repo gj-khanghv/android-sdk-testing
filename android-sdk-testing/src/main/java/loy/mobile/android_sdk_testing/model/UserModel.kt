@@ -81,7 +81,7 @@ data class MemberModel(
     val dinarMemberId: String?,
     val dinarAccountId: String?,
     val ekycStatus: String?,
-    val canEditProfile: String?,
+    val canEditProfile: Boolean?,
     val syncStatus: String?,
     val skyPlus: String?,
     val oldRankSkyPlus: Int?,
