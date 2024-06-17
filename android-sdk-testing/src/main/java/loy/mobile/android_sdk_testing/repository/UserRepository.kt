@@ -5,5 +5,5 @@ import kotlinx.coroutines.withContext
 import loy.mobile.android_sdk_testing.model.UserModel
 
 interface UserRepository {
-    suspend fun fetchUserProfile(token: String, env: String): UserModel?
+    suspend fun fetchUserProfile(token: String, env: String): String
 }

@@ -79,7 +79,7 @@ afterEvaluate {
                     from(components.findByName(it.name))
                     groupId = "com.github.gj-khanghv"
                     artifactId = "android-sdk-testing"
-                    version = "release-15"
+                    version = "release-16"
                 }
             }
         }
