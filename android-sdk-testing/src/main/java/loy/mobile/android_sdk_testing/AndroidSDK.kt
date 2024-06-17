@@ -114,7 +114,7 @@ class AndroidSDK(
         }
     }
 
-    fun userProfile(token: String, onProfileFetch: (UserModel?) -> Unit) {
+    fun userProfile(token: String, onProfileFetch: (String) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             val user = userRepository.fetchUserProfile(token, env)
             onProfileFetch(user)
